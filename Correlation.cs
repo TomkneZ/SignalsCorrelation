@@ -10,12 +10,12 @@ namespace Lab4
             var result = new double[l];
 
             var index1 = 0;
-            int index2 = secondSignal.Length - 1;
-
-            int start, end, index;
+            int index2 = secondSignal.Length - 1;            
 
             for (var i = 0; i < l; i++)
             {
+                int start, end, index;
+
                 var sum = 0.0;
                 if (i < firstSignal.Length - 1)
                 {

@@ -2,7 +2,6 @@
 using OxyPlot.Axes;
 using OxyPlot.Legends;
 using OxyPlot.Series;
-using System.Collections.ObjectModel;
 
 namespace Lab4
 {
@@ -19,9 +18,9 @@ namespace Lab4
 
             for (var i = 0; i < points.Length; i++)
             {
-                var x_val = (float)i / (float)points.Length;
-                var y_val = points[i];
-                series.Points.Add(new DataPoint(x_val, y_val));
+                var xVal = (float)i / (float)points.Length;
+                var yVal = points[i];
+                series.Points.Add(new DataPoint(xVal, yVal));
             }
 
             return series;
