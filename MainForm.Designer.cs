@@ -46,13 +46,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.firstSignalPlotView = new OxyPlot.WindowsForms.PlotView();
-            this.secondSignalPlotView = new OxyPlot.WindowsForms.PlotView();
+            this.signalsPlotView = new OxyPlot.WindowsForms.PlotView();
             this.crossCorrelationRadioButton = new System.Windows.Forms.RadioButton();
             this.autoCorrelationRadioButton = new System.Windows.Forms.RadioButton();
             this.correlateButton = new System.Windows.Forms.Button();
-            this.plotView1 = new OxyPlot.WindowsForms.PlotView();
-            this.plotView2 = new OxyPlot.WindowsForms.PlotView();
+            this.correlationPlotView = new OxyPlot.WindowsForms.PlotView();
             this.SuspendLayout();
             // 
             // firstSignalLabel
@@ -70,6 +68,7 @@
             this.firstSignalFrequencyTextBox.Name = "firstSignalFrequencyTextBox";
             this.firstSignalFrequencyTextBox.Size = new System.Drawing.Size(125, 27);
             this.firstSignalFrequencyTextBox.TabIndex = 1;
+            this.firstSignalFrequencyTextBox.Text = "1";
             // 
             // firstSignalAmplitudeTextBox
             // 
@@ -77,6 +76,7 @@
             this.firstSignalAmplitudeTextBox.Name = "firstSignalAmplitudeTextBox";
             this.firstSignalAmplitudeTextBox.Size = new System.Drawing.Size(125, 27);
             this.firstSignalAmplitudeTextBox.TabIndex = 2;
+            this.firstSignalAmplitudeTextBox.Text = "100";
             // 
             // firstSignalTypeComboBox
             // 
@@ -134,6 +134,7 @@
             this.secondSignalAmplitudeTextBox.Name = "secondSignalAmplitudeTextBox";
             this.secondSignalAmplitudeTextBox.Size = new System.Drawing.Size(125, 27);
             this.secondSignalAmplitudeTextBox.TabIndex = 7;
+            this.secondSignalAmplitudeTextBox.Text = "80";
             // 
             // secondSignalFrequencyTextBox
             // 
@@ -141,6 +142,7 @@
             this.secondSignalFrequencyTextBox.Name = "secondSignalFrequencyTextBox";
             this.secondSignalFrequencyTextBox.Size = new System.Drawing.Size(125, 27);
             this.secondSignalFrequencyTextBox.TabIndex = 6;
+            this.secondSignalFrequencyTextBox.Text = "1.5";
             // 
             // secondSignalLabel
             // 
@@ -223,31 +225,18 @@
             this.label4.TabIndex = 14;
             this.label4.Text = "Type";
             // 
-            // firstSignalPlotView
+            // signalsPlotView
             // 
-            this.firstSignalPlotView.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.firstSignalPlotView.Location = new System.Drawing.Point(254, 35);
-            this.firstSignalPlotView.Name = "firstSignalPlotView";
-            this.firstSignalPlotView.PanCursor = System.Windows.Forms.Cursors.Hand;
-            this.firstSignalPlotView.Size = new System.Drawing.Size(768, 164);
-            this.firstSignalPlotView.TabIndex = 18;
-            this.firstSignalPlotView.Text = "plotView1";
-            this.firstSignalPlotView.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
-            this.firstSignalPlotView.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
-            this.firstSignalPlotView.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
-            // 
-            // secondSignalPlotView
-            // 
-            this.secondSignalPlotView.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.secondSignalPlotView.Location = new System.Drawing.Point(254, 205);
-            this.secondSignalPlotView.Name = "secondSignalPlotView";
-            this.secondSignalPlotView.PanCursor = System.Windows.Forms.Cursors.Hand;
-            this.secondSignalPlotView.Size = new System.Drawing.Size(768, 163);
-            this.secondSignalPlotView.TabIndex = 19;
-            this.secondSignalPlotView.Text = "plotView1";
-            this.secondSignalPlotView.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
-            this.secondSignalPlotView.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
-            this.secondSignalPlotView.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
+            this.signalsPlotView.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.signalsPlotView.Location = new System.Drawing.Point(254, 35);
+            this.signalsPlotView.Name = "signalsPlotView";
+            this.signalsPlotView.PanCursor = System.Windows.Forms.Cursors.Hand;
+            this.signalsPlotView.Size = new System.Drawing.Size(768, 288);
+            this.signalsPlotView.TabIndex = 18;
+            this.signalsPlotView.Text = "plotView1";
+            this.signalsPlotView.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
+            this.signalsPlotView.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
+            this.signalsPlotView.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
             // 
             // crossCorrelationRadioButton
             // 
@@ -281,44 +270,28 @@
             this.correlateButton.UseVisualStyleBackColor = true;
             this.correlateButton.Click += new System.EventHandler(this.correlateButton_Click);
             // 
-            // plotView1
+            // correlationPlotView
             // 
-            this.plotView1.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.plotView1.Location = new System.Drawing.Point(254, 374);
-            this.plotView1.Name = "plotView1";
-            this.plotView1.PanCursor = System.Windows.Forms.Cursors.Hand;
-            this.plotView1.Size = new System.Drawing.Size(768, 163);
-            this.plotView1.TabIndex = 23;
-            this.plotView1.Text = "plotView1";
-            this.plotView1.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
-            this.plotView1.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
-            this.plotView1.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
-            // 
-            // plotView2
-            // 
-            this.plotView2.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.plotView2.Location = new System.Drawing.Point(254, 544);
-            this.plotView2.Name = "plotView2";
-            this.plotView2.PanCursor = System.Windows.Forms.Cursors.Hand;
-            this.plotView2.Size = new System.Drawing.Size(768, 163);
-            this.plotView2.TabIndex = 24;
-            this.plotView2.Text = "plotView1";
-            this.plotView2.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
-            this.plotView2.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
-            this.plotView2.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
+            this.correlationPlotView.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.correlationPlotView.Location = new System.Drawing.Point(254, 346);
+            this.correlationPlotView.Name = "correlationPlotView";
+            this.correlationPlotView.PanCursor = System.Windows.Forms.Cursors.Hand;
+            this.correlationPlotView.Size = new System.Drawing.Size(768, 285);
+            this.correlationPlotView.TabIndex = 23;
+            this.correlationPlotView.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
+            this.correlationPlotView.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
+            this.correlationPlotView.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1034, 720);
-            this.Controls.Add(this.plotView2);
-            this.Controls.Add(this.plotView1);
+            this.Controls.Add(this.correlationPlotView);
             this.Controls.Add(this.correlateButton);
             this.Controls.Add(this.autoCorrelationRadioButton);
             this.Controls.Add(this.crossCorrelationRadioButton);
-            this.Controls.Add(this.secondSignalPlotView);
-            this.Controls.Add(this.firstSignalPlotView);
+            this.Controls.Add(this.signalsPlotView);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
@@ -364,12 +337,10 @@
         private Label label2;
         private Label label3;
         private Label label4;
-        private OxyPlot.WindowsForms.PlotView firstSignalPlotView;
-        private OxyPlot.WindowsForms.PlotView secondSignalPlotView;
+        private OxyPlot.WindowsForms.PlotView signalsPlotView;
         private RadioButton crossCorrelationRadioButton;
         private RadioButton autoCorrelationRadioButton;
         private Button correlateButton;
-        private OxyPlot.WindowsForms.PlotView plotView1;
-        private OxyPlot.WindowsForms.PlotView plotView2;
+        private OxyPlot.WindowsForms.PlotView correlationPlotView;
     }
 }

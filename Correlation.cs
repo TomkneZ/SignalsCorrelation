@@ -1,64 +1,131 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Numerics;
 
 namespace Lab4
 {
     internal static class Correlation
     {
-        internal static List<double> CrossCorrellation(List<double> signal1, List<double> signal2)
+        internal static double[] CrossCorrelation(double[] firstSignal, double[] secondSignal)
         {
-            var result = new List<double>();
-            var new_l2 = new List<double>();
+            var l = firstSignal.Length + secondSignal.Length;
+            var result = new double[l];
 
-            var num_point = signal2.Count;
-            new_l2.AddRange(signal2);
+            var index1 = 0;
+            int index2 = secondSignal.Length - 1;
 
-            List<List<double>> shifted_list = new List<List<double>>();
+            int start, end, index;
 
-            double sum = 0.0;
-            for (int n = 0; n < num_point; n++)
+            for (var i = 0; i < l; i++)
             {
-                sum = 0.0;
-                sum = GetCorrelationSum(num_point, signal1, shifted_list[n]);
-                sum = sum / num_point;
-                result.Add(sum);
+                var sum = 0.0;
+                if (i < firstSignal.Length - 1)
+                {
+                    start = index2;
+                    end = secondSignal.Length;
+                    index = 0;
+
+                    for (var j = start; j < end; j++)
+                    {
+                        sum += firstSignal[index++] * secondSignal[j];
+                    }
+
+                    index1++;
+                    index2--;
+                }
+                else
+                {
+                    start = firstSignal.Length - index1 - 1;
+                    end = firstSignal.Length;
+                    index = 0;
+
+                    for (var j = start; j < end; j++)
+                    {
+                        sum += firstSignal[j] * secondSignal[index++];
+                    }
+
+                    index1--;
+                    index2++;
+                }
+
+                result[i] = sum;
             }
-            return result;
+
+            return NormalizeCorrelatedSignal(result);
         }
 
-        internal static List<double> AutoCorrelation(List<double> signal1, List<double> signal2)
+        internal static double[] FastCrossCorrelation(double[] firstSignal, double[] secondSignal)
         {
-            var result = new List<double>();
-            var new_l2 = new List<double>();
-            new_l2.AddRange(signal2);
+            var l = firstSignal.Length + secondSignal.Length;
+            var complexFirstSignal = new Complex[l];
+            var complexSecondSignal = new Complex[l];
 
-            List<List<double>> shifted_list = new List<List<double>>();
-
-            double sum = 0.0;
-            for (int n = 0; n < signal1.Count; n++)
+            for (var i = 0; i < firstSignal.Length; i++)
             {
-                sum = 0.0;
-                sum = GetCorrelationSum(signal1.Count, signal1, shifted_list[n]);
-                sum = sum / signal1.Count;
-                result.Add(sum);
+                complexFirstSignal[i] = firstSignal[i];
+                complexSecondSignal[i] = secondSignal[i];
             }
-            return result;
+
+            var firstFFT = FFT.fft(complexFirstSignal, true);
+            var secondFFT = FFT.fft(complexSecondSignal, true);
+
+            var multiplicated = new Complex[l];
+            for (var i = 0; i < l; i++)
+            {
+                firstFFT[i] /= firstFFT.Length; 
+                secondFFT[i] /= secondFFT.Length;
+
+                multiplicated[i] = firstFFT[i] * Complex.Conjugate(secondFFT[i]);
+            }
+
+            var correlation = FFT.fft(multiplicated, false);
+            var result = new double[l];
+            for (var i = 0; i < l; i++)
+            {
+                result[i] = correlation[i].Real;
+            }
+
+            return NormalizeCorrelatedSignal(result);
+        }
+        
+        internal static double[] AutoCorrelation(double[] signal, int shift)
+        {
+            return CrossCorrelation(signal, GetShiftedSignal(signal, shift));
         }
 
-        private static double GetCorrelationSum(int n, List<double> l1, List<double> l2)
+        internal static double[] FastAutoCorrelation(double[] signal, int shift)
         {
-            double sum = 0.0;
+            return FastCrossCorrelation(signal, GetShiftedSignal(signal, shift));
+        }
 
-            for (int i = 0; i < n; i++)
+        private static double[] GetShiftedSignal(double[] signal, int shift)
+        {
+            var shiftedSignal = new double[signal.Length];
+
+            for (var i = 0; i < shiftedSignal.Length; i++)
             {
-                sum += l1[i] * l2[i];
+                var index = i - shift;
 
+                if (index < 0)
+                {
+                    index = signal.Length + index;
+                }
+
+                shiftedSignal[i] = signal[index];
             }
 
-            return sum;
+            return shiftedSignal;
+        }
+
+        private static double[] NormalizeCorrelatedSignal(double[] correlatedSignal)
+        {
+            var max = correlatedSignal.Max();
+            var normalizedSignal = new double[correlatedSignal.Length];
+
+            for (var i = 0; i < normalizedSignal.Length; i++)
+            {
+                normalizedSignal[i] = correlatedSignal[i] / max;
+            }
+
+            return normalizedSignal;
         }
     }
 }

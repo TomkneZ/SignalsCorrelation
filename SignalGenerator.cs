@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Lab4
+﻿namespace Lab4
 {
     internal static class SignalGenerator
     {
-        internal static double[] GenerateSin(double amplitude, double frequency, double initialPhase, int samplingRate = 4096)
+        private const int N = 1024;
+
+        internal static double[] GenerateSin(double amplitude, double frequency, double initialPhase, int samplingRate = N)
         {
             var data = new double[samplingRate];
 
@@ -20,7 +16,7 @@ namespace Lab4
             return data;
         }
 
-        internal static double[] GenerateTriangular(double amplitude, double frequency, double initialPhase, int samplingRate = 1024)
+        internal static double[] GenerateTriangular(double amplitude, double frequency, double initialPhase, int samplingRate = N)
         {
             var data = new double[samplingRate];
 
@@ -32,7 +28,7 @@ namespace Lab4
             return data;
         }
 
-        internal static double[] GenerateSawtooth(double amplitude, double frequency, double initialPhase, int samplingRate = 1024)
+        internal static double[] GenerateSawtooth(double amplitude, double frequency, double initialPhase, int samplingRate = N)
         {
             var data = new double[samplingRate];
 

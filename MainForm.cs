@@ -1,7 +1,15 @@
+using OxyPlot.WindowsForms;
+
 namespace Lab4
 {
     public partial class MainForm : Form
     {
+        private const string FirstSignalSeriesName = "first signal";
+        private const string SecondSignalSeriesName = "first signal";
+
+        private const string CorrelationSeriesName = "correlation";
+        private const string FastCorrelationSeriesName = "fast correlation";
+
         public MainForm()
         {
             InitializeComponent();
@@ -29,10 +37,33 @@ namespace Lab4
             var firstSignal = GetSignal(firstSignalTypeComboBox.SelectedIndex,
                 firstSignalAmplitude, firstSignalFrequency, firstSignalInitialPhase);
             var secondSignal = GetSignal(secondSignalTypeComboBox.SelectedIndex,
-                secondSignalAmplitude, secondSignalFrequency, secondSignalInitialPhase);
+                secondSignalAmplitude, secondSignalFrequency, secondSignalInitialPhase);            
 
-            firstSignalPlotView.Model = PlotDrawer.GetPlotModel(firstSignal);
-            secondSignalPlotView.Model = PlotDrawer.GetPlotModel(secondSignal);
+            if (crossCorrelationRadioButton.Checked)
+            {
+                DrawSignalSeries(firstSignal, secondSignal,
+                                 FirstSignalSeriesName, SecondSignalSeriesName,
+                                 signalsPlotView);
+
+                var crossCorrelatedSignal = Correlation.CrossCorrelation(firstSignal, secondSignal);                
+                var fastCrossCorrelatedSignal = Correlation.FastCrossCorrelation(firstSignal, secondSignal);
+                DrawSignalSeries(crossCorrelatedSignal, fastCrossCorrelatedSignal,
+                                 CorrelationSeriesName, FastCorrelationSeriesName,
+                                 correlationPlotView);
+            }   
+            
+            if (autoCorrelationRadioButton.Checked)
+            {
+                DrawSignalSeries(firstSignal, null,
+                                 FirstSignalSeriesName, null,
+                                 signalsPlotView);
+
+                var autoCorrelatedSignal = Correlation.AutoCorrelation(firstSignal, 100);
+                var fastAutoCorrelatedSignal = Correlation.FastAutoCorrelation(firstSignal, 100);
+                DrawSignalSeries(autoCorrelatedSignal, fastAutoCorrelatedSignal,
+                                 CorrelationSeriesName, FastCorrelationSeriesName,
+                                 correlationPlotView);
+            }
         }
 
         private double GetInitialPhaseValue(int selectedIndex) => 
@@ -51,5 +82,21 @@ namespace Lab4
             2 => SignalGenerator.GenerateTriangular(amplitude, frequency, initialPhase),
             _ => SignalGenerator.GenerateSin(amplitude, frequency, initialPhase)
         };
+
+        private void DrawSignalSeries(double[] firstSignal, double[] secondSignal, 
+            string firstSeriesName, string secondSeriesName, PlotView signalsPlotView) 
+        {
+            var signalsPlotModel = PlotDrawer.GetPlotModel();
+            var firstSignalSeries = PlotDrawer.GetSeriesFromPoints(firstSignal, firstSeriesName);
+            signalsPlotModel.Series.Add(firstSignalSeries);
+
+            if (secondSignal != null)
+            {                
+                var secondSignalSeries = PlotDrawer.GetSeriesFromPoints(secondSignal, secondSeriesName);
+                signalsPlotModel.Series.Add(secondSignalSeries);                
+            }
+            
+            signalsPlotView.Model = signalsPlotModel;
+        }
     }
 }
