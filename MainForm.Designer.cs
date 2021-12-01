@@ -51,6 +51,10 @@
             this.autoCorrelationRadioButton = new System.Windows.Forms.RadioButton();
             this.correlateButton = new System.Windows.Forms.Button();
             this.correlationPlotView = new OxyPlot.WindowsForms.PlotView();
+            this.correlationTimeLabel = new System.Windows.Forms.Label();
+            this.fastCorrelationLabel = new System.Windows.Forms.Label();
+            this.correlationTimeResultLabel = new System.Windows.Forms.Label();
+            this.fastCorrelationResultLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // firstSignalLabel
@@ -282,11 +286,49 @@
             this.correlationPlotView.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
             this.correlationPlotView.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
             // 
+            // correlationTimeLabel
+            // 
+            this.correlationTimeLabel.AutoSize = true;
+            this.correlationTimeLabel.Location = new System.Drawing.Point(282, 653);
+            this.correlationTimeLabel.Name = "correlationTimeLabel";
+            this.correlationTimeLabel.Size = new System.Drawing.Size(124, 20);
+            this.correlationTimeLabel.TabIndex = 24;
+            this.correlationTimeLabel.Text = "Correlation time: ";
+            // 
+            // fastCorrelationLabel
+            // 
+            this.fastCorrelationLabel.AutoSize = true;
+            this.fastCorrelationLabel.Location = new System.Drawing.Point(559, 653);
+            this.fastCorrelationLabel.Name = "fastCorrelationLabel";
+            this.fastCorrelationLabel.Size = new System.Drawing.Size(113, 20);
+            this.fastCorrelationLabel.TabIndex = 25;
+            this.fastCorrelationLabel.Text = "Fast correlation:";
+            // 
+            // correlationTimeResultLabel
+            // 
+            this.correlationTimeResultLabel.AutoSize = true;
+            this.correlationTimeResultLabel.Location = new System.Drawing.Point(405, 654);
+            this.correlationTimeResultLabel.Name = "correlationTimeResultLabel";
+            this.correlationTimeResultLabel.Size = new System.Drawing.Size(0, 20);
+            this.correlationTimeResultLabel.TabIndex = 26;
+            // 
+            // fastCorrelationResultLabel
+            // 
+            this.fastCorrelationResultLabel.AutoSize = true;
+            this.fastCorrelationResultLabel.Location = new System.Drawing.Point(680, 653);
+            this.fastCorrelationResultLabel.Name = "fastCorrelationResultLabel";
+            this.fastCorrelationResultLabel.Size = new System.Drawing.Size(0, 20);
+            this.fastCorrelationResultLabel.TabIndex = 27;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1034, 720);
+            this.Controls.Add(this.fastCorrelationResultLabel);
+            this.Controls.Add(this.correlationTimeResultLabel);
+            this.Controls.Add(this.fastCorrelationLabel);
+            this.Controls.Add(this.correlationTimeLabel);
             this.Controls.Add(this.correlationPlotView);
             this.Controls.Add(this.correlateButton);
             this.Controls.Add(this.autoCorrelationRadioButton);
@@ -342,5 +384,9 @@
         private RadioButton autoCorrelationRadioButton;
         private Button correlateButton;
         private OxyPlot.WindowsForms.PlotView correlationPlotView;
+        private Label correlationTimeLabel;
+        private Label fastCorrelationLabel;
+        private Label correlationTimeResultLabel;
+        private Label fastCorrelationResultLabel;
     }
 }

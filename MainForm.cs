@@ -1,11 +1,12 @@
 using OxyPlot.WindowsForms;
+using System.Diagnostics;
 
 namespace Lab4
 {
     public partial class MainForm : Form
     {
         private const string FirstSignalSeriesName = "first signal";
-        private const string SecondSignalSeriesName = "first signal";
+        private const string SecondSignalSeriesName = "second signal";
 
         private const string CorrelationSeriesName = "correlation";
         private const string FastCorrelationSeriesName = "fast correlation";
@@ -45,8 +46,15 @@ namespace Lab4
                                  FirstSignalSeriesName, SecondSignalSeriesName,
                                  signalsPlotView);
 
-                var crossCorrelatedSignal = Correlation.CrossCorrelation(firstSignal, secondSignal);                
+                var correlationStart = DateTime.Now;
+                var crossCorrelatedSignal = Correlation.CrossCorrelation(firstSignal, secondSignal);
+                var time = DateTime.Now.Subtract(correlationStart).TotalMilliseconds;
+
+                var fastCorrelationStart = DateTime.Now;
                 var fastCrossCorrelatedSignal = Correlation.FastCrossCorrelation(firstSignal, secondSignal);
+                var fastTime = (DateTime.Now - fastCorrelationStart).TotalMilliseconds;
+
+                DisplayCorrelationTime(time.ToString(), fastTime.ToString());
                 DrawSignalSeries(crossCorrelatedSignal, fastCrossCorrelatedSignal,
                                  CorrelationSeriesName, FastCorrelationSeriesName,
                                  correlationPlotView);
@@ -57,9 +65,15 @@ namespace Lab4
                 DrawSignalSeries(firstSignal, null,
                                  FirstSignalSeriesName, null,
                                  signalsPlotView);
-
+                var correlationStart = DateTime.Now;
                 var autoCorrelatedSignal = Correlation.AutoCorrelation(firstSignal, 100);
+                var time = DateTime.Now.Subtract(correlationStart).TotalMilliseconds;
+
+                var fastCorrelationStart = DateTime.Now;
                 var fastAutoCorrelatedSignal = Correlation.FastAutoCorrelation(firstSignal, 100);
+                var fastTime = (DateTime.Now - fastCorrelationStart).TotalMilliseconds;
+
+                DisplayCorrelationTime(time.ToString(), fastTime.ToString());
                 DrawSignalSeries(autoCorrelatedSignal, fastAutoCorrelatedSignal,
                                  CorrelationSeriesName, FastCorrelationSeriesName,
                                  correlationPlotView);
@@ -97,6 +111,12 @@ namespace Lab4
             }
             
             signalsPlotView.Model = signalsPlotModel;
+        }
+
+        private void DisplayCorrelationTime(string time, string fastTime)
+        {
+            correlationTimeResultLabel.Text = time;
+            fastCorrelationResultLabel.Text = fastTime;
         }
     }
 }

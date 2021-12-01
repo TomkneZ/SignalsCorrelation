@@ -2,7 +2,7 @@
 {
     internal static class SignalGenerator
     {
-        private const int N = 1024;
+        private const int N = 8192;
 
         internal static double[] GenerateSin(double amplitude, double frequency, double initialPhase, int samplingRate = N)
         {

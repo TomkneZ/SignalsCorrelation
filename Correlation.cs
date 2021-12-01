@@ -106,7 +106,7 @@ namespace Lab4
 
                 if (index < 0)
                 {
-                    index = signal.Length + index;
+                    index += signal.Length;
                 }
 
                 shiftedSignal[i] = signal[index];
